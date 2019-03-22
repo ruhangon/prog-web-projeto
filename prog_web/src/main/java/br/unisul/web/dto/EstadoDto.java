@@ -1,22 +1,21 @@
 package br.unisul.web.dto;
 import java.io.Serializable;
-import br.unisul.web.domain.Categoria;
+import br.unisul.web.domain.Estado;
 
-public class CategoriaDto implements Serializable {
+public class EstadoDto implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private Integer id;
 	private String nome;
 
-	public CategoriaDto(Categoria c) {
-		id = c.getId();
-		nome = c.getNome();
+	public EstadoDto(Estado e) {
+		id = e.getId();
+		nome = e.getNome();
 	}
 
-	public CategoriaDto() {
-
+	public EstadoDto() {
 	}
 
-	public CategoriaDto(Integer id, String nome) {
+	public EstadoDto(Integer id, String nome) {
 		this.id = id;
 		this.nome = nome;
 	}

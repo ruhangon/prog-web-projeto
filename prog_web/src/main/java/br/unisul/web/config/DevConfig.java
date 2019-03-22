@@ -8,7 +8,6 @@ import br.unisul.web.services.DbService;
 
 @Configuration
 public class DevConfig {
-
 	@Autowired
 	private DbService dbService;
 

@@ -1,22 +1,22 @@
-package br.unisul.web.dto;
+package br.unisul.web.domain;
 import java.io.Serializable;
-import br.unisul.web.domain.Categoria;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
-public class CategoriaDto implements Serializable {
+@Entity
+public class Estado implements Serializable {
 	private static final long serialVersionUID = 1L;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	private String nome;
 
-	public CategoriaDto(Categoria c) {
-		id = c.getId();
-		nome = c.getNome();
+	public Estado() {
 	}
 
-	public CategoriaDto() {
-
-	}
-
-	public CategoriaDto(Integer id, String nome) {
+	public Estado(Integer id, String nome) {
 		this.id = id;
 		this.nome = nome;
 	}
