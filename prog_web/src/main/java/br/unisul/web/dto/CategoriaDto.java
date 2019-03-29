@@ -1,5 +1,7 @@
 package br.unisul.web.dto;
+
 import java.io.Serializable;
+
 import br.unisul.web.domain.Categoria;
 
 public class CategoriaDto implements Serializable {
