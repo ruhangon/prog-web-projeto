@@ -1,6 +1,7 @@
 package br.unisul.web.services;
 
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,8 @@ import br.unisul.web.domain.Cidade;
 import br.unisul.web.domain.Cliente;
 import br.unisul.web.domain.Endereco;
 import br.unisul.web.domain.Estado;
+import br.unisul.web.domain.ItemPedido;
+import br.unisul.web.domain.Pedido;
 import br.unisul.web.domain.Produto;
 import br.unisul.web.domain.enums.TipoCliente;
 import br.unisul.web.repositories.CategoriaRepository;
@@ -18,6 +21,8 @@ import br.unisul.web.repositories.CidadeRepository;
 import br.unisul.web.repositories.ClienteRepository;
 import br.unisul.web.repositories.EnderecoRepository;
 import br.unisul.web.repositories.EstadoRepository;
+import br.unisul.web.repositories.ItemPedidoRepository;
+import br.unisul.web.repositories.PedidoRepository;
 import br.unisul.web.repositories.ProdutoRepository;
 
 @Service
@@ -40,6 +45,12 @@ public class DbService {
 
 	@Autowired
 	private EnderecoRepository endRep;
+
+	@Autowired
+	private PedidoRepository pedRep;
+
+	@Autowired
+	private ItemPedidoRepository itemPedRep;
 
 	public void inicializaBancoDeDados() throws ParseException {
 
@@ -92,6 +103,26 @@ public class DbService {
 
 		catRep.saveAll(Arrays.asList(cat1, cat2, cat3, cat4, cat5, cat6, cat7));
 		prodRep.saveAll(Arrays.asList(p1, p2, p3));
+
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+
+		Pedido ped1 = new Pedido(null, sdf.parse("30/09/2018 11:30"), cli1, en1);
+		Pedido ped2 = new Pedido(null, sdf.parse("20/12/2018 17:00"), cli1, en2);
+		cli1.getPedidos().addAll(Arrays.asList(ped1, ped2));
+		pedRep.saveAll(Arrays.asList(ped1, ped2));
+
+		ItemPedido ip1 = new ItemPedido(ped1, p1, 0.00, 1, 2000.00);
+		ItemPedido ip2 = new ItemPedido(ped1, p3, 0.00, 2, 80.00);
+		ItemPedido ip3 = new ItemPedido(ped2, p2, 100.00, 1, 800.00);
+
+		ped1.getItens().addAll(Arrays.asList(ip1, ip2));
+		ped2.getItens().addAll(Arrays.asList(ip3));
+
+		p1.getItens().addAll(Arrays.asList(ip1));
+		p2.getItens().addAll(Arrays.asList(ip3));
+		p3.getItens().addAll(Arrays.asList(ip2));
+
+		itemPedRep.saveAll(Arrays.asList(ip1, ip2, ip3));
 	}
 
 }

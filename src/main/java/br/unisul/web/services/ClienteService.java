@@ -79,4 +79,9 @@ public class ClienteService {
 		return obj;
 	}
 
+	public Cliente findByEmail(String email) {
+		Cliente obj = repo.findByEmail(email);
+		return obj;
+	}
+
 }
