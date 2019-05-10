@@ -43,4 +43,8 @@ public class CategoriaService {
 		return rep.findAll();
 	}
 
+	public List<Categoria> findByNome(String nome) {
+		return rep.findByCategoriaContaining(nome);
+	}
+
 }

@@ -57,7 +57,6 @@ public class CategoriaResource {
 	@RequestMapping(method = RequestMethod.GET)
 	public ResponseEntity<List<CategoriaDto>> findAll() {
 		List<Categoria> lista = service.findAll();
-
 		List<CategoriaDto> listDto = new ArrayList<CategoriaDto>();
 
 		for (Categoria c : lista) {
@@ -65,6 +64,21 @@ public class CategoriaResource {
 		}
 
 		return ResponseEntity.ok().body(listDto);
+	}
+
+	// Encontrar categorias por trechos de nome
+	@RequestMapping(value = "/{nome}/nome", method = RequestMethod.GET)
+	public ResponseEntity<List<CategoriaDto>> findCategorias(@PathVariable String nome) {
+		List<Categoria> lista = service.findByNome(nome);
+		List<CategoriaDto> listaDto = new ArrayList<CategoriaDto>();
+
+		for (Categoria c : lista) {
+			listaDto.add(new CategoriaDto(c));
+		}
+
+		return ResponseEntity.ok().body(listaDto);
+// List<Categoria> lista = service.findByNome(nome);
+// return ResponseEntity.ok().body(lista);
 	}
 
 }

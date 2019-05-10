@@ -17,4 +17,5 @@ public class CidadeService {
 	public List<Cidade> findByEstado(Integer estadoId) {
 		return rep.findCidades(estadoId);
 	}
+
 }
