@@ -10,11 +10,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import br.unisul.web.domain.Categoria;
 import br.unisul.web.dto.CategoriaDto;
+import br.unisul.web.resources.utils.URL;
 import br.unisul.web.services.CategoriaService;
 
 @RestController
@@ -67,18 +69,17 @@ public class CategoriaResource {
 	}
 
 	// Encontrar categorias por trechos de nome
-	@RequestMapping(value = "/{nome}/nome", method = RequestMethod.GET)
-	public ResponseEntity<List<CategoriaDto>> findCategorias(@PathVariable String nome) {
-		List<Categoria> lista = service.findByNome(nome);
+	@RequestMapping(value = "/filtro", method = RequestMethod.GET)
+	public ResponseEntity<List<CategoriaDto>> filtrarPorNome(@RequestParam(value = "nome", defaultValue = "") String nome) {
 		List<CategoriaDto> listaDto = new ArrayList<CategoriaDto>();
+		String nomeDecoded = URL.decodeParam(nome);
+		List<Categoria> lista = service.findByNome(nomeDecoded);
 
 		for (Categoria c : lista) {
 			listaDto.add(new CategoriaDto(c));
 		}
 
 		return ResponseEntity.ok().body(listaDto);
-// List<Categoria> lista = service.findByNome(nome);
-// return ResponseEntity.ok().body(lista);
 	}
 
 }
