@@ -1,6 +1,7 @@
 package br.unisul.web.resources;
 
 import java.net.URI;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -17,6 +19,7 @@ import br.unisul.web.domain.Cidade;
 import br.unisul.web.domain.Estado;
 import br.unisul.web.dto.CidadeDto;
 import br.unisul.web.dto.EstadoDto;
+import br.unisul.web.resources.utils.URL;
 import br.unisul.web.services.CidadeService;
 import br.unisul.web.services.EstadoService;
 
@@ -74,4 +77,20 @@ public class EstadoResource {
 		List<EstadoDto> listaDTO = lista.stream().map(obj -> new EstadoDto(obj)).collect(Collectors.toList());
 		return ResponseEntity.ok().body(listaDTO);
 	}
+
+	// Encontrar estados por trechos de nome
+	@RequestMapping(value = "/filtro", method = RequestMethod.GET)
+	public ResponseEntity<List<EstadoDto>> filtrarPorNome(
+			@RequestParam(value = "nome", defaultValue = "") String nome) {
+		List<EstadoDto> listaDto = new ArrayList<EstadoDto>();
+		String nomeDecoded = URL.decodeParam(nome);
+		List<Estado> lista = service.findByNome(nomeDecoded);
+
+		for (Estado e : lista) {
+			listaDto.add(new EstadoDto(e));
+		}
+
+		return ResponseEntity.ok().body(listaDto);
+	}
+
 }

@@ -13,7 +13,7 @@ import br.unisul.web.domain.Categoria;
 @Repository
 public interface CategoriaRepository extends JpaRepository<Categoria, Integer> {
 	@Transactional(readOnly = true)
-	@Query("select c from Categoria c where c.nome like :nome%")
+	@Query("select c from Categoria c where c.nome like %:nome%")
 	List<Categoria> findByCategoriaContaining(@Param("nome") String nome);
 
 // public List<Categoria> findByNomeContaining(String nome);

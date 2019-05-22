@@ -43,4 +43,8 @@ public class EstadoService {
 		return rep.findAll();
 	}
 
+	public List<Estado> findByNome(String nome) {
+		return rep.findByEstadoContaining(nome);
+	}
+
 }
