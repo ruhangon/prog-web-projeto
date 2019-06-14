@@ -20,6 +20,9 @@ public class ProdutoService {
 	@Autowired
 	private CategoriaRepository categoriaRepository;
 
+	// @Autowired
+	// private CategoriaService categoriaService;
+
 	public Produto find(Integer id) {
 		Optional<Produto> obj = rep.findById(id);
 		return obj.orElse(null);
@@ -29,4 +32,13 @@ public class ProdutoService {
 		List<Categoria> categorias = categoriaRepository.findAllById(ids);
 		return rep.findDistinctByNomeContainingAndCategoriasIn(nome, categorias);
 	}
+
+	public Produto insert(Produto obj) {
+		obj.setId(null);
+		obj.setCategorias(null);
+		// criar find para categorias, para identificar quais as categorias do produto
+		obj = rep.save(obj);
+		return obj;
+	}
+
 }
